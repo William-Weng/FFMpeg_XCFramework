@@ -59,6 +59,28 @@ mkdir build/${Framework_Path}
 cd build/${Framework_Path}
 ```
 
+- 產生設定檔
+```bash
+../../${Source_Dir}/configure \
+--prefix=../../installed/${Framework_Path} \
+--disable-static \
+--enable-shared \
+--enable-cross-compile \
+--target-os=darwin \
+--arch=${Arch} \
+--sysroot=${SYSROOT} \
+--extra-cflags="-arch ${Arch} -m${Type}-version-min=${MinVersion} -fembed-bitcode" \
+--extra-ldflags="-arch ${Arch} -m${Type}-version-min=${MinVersion}" \
+--cc=${CC} \
+--cxx=${CXX} \
+--install-name-dir=@rpath \
+--disable-audiotoolbox \
+--disable-doc \
+--disable-programs \
+--disable-videotoolbox \
+--enable-network
+```
+
 - 編譯原始碼
 ```bash
 make -j$(sysctl -n hw.ncpu) 
